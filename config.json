@@ -6,26 +6,17 @@
 	},
 	"email": "support@example.com",
 	"access": {
-		"verifyOrigin": true,
+		"verifyOrigin": false,
 		"apikeys": [{
-			"origin": "http://localhost:3000",
-			"key": "2Fx64jQ54asz8MD92MOVBOWS"
-		}, {
-			"origin": "http://prometheus-web.herokuapp.com",
-			"key": "2Fx64jQ54asz8MD92MOVBOWS"
-		}, {
-			"origin": "http://prometheus.com",
-			"key": "2Fx64jQ54asz8MD92MOVBOWS"
-		}, {
-			"origin": "android",
-			"key": "DaSVvkWbt30R5vJPhjlNyAQg"
+			"origin": "nope",
+			"key": "lD8}QF75XrWZTfu"
 		}]
 	},
 	"databases": {
 		"local": "mongodb://localhost/test",
-		"production": "mongodb://test:test1234@ds055915.mongolab.com:55915/test-be"
+		"production": "mongodb://heroku_xqgk174n:jie0tspqq5t7dn7amihibidj16@ds019468.mlab.com:19468/heroku_xqgk174n"
 	},
 	"users": {
-		"types": ["admin", "manager", "member"]
+		"types": ["admin", "member"]
 	}
 }
