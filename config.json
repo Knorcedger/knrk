@@ -1,0 +1,31 @@
+{
+	"version": "0.1.0",
+	"port": 2000,
+	"session": {
+		"timeout": 36000000
+	},
+	"email": "support@example.com",
+	"access": {
+		"verifyOrigin": true,
+		"apikeys": [{
+			"origin": "http://localhost:3000",
+			"key": "2Fx64jQ54asz8MD92MOVBOWS"
+		}, {
+			"origin": "http://prometheus-web.herokuapp.com",
+			"key": "2Fx64jQ54asz8MD92MOVBOWS"
+		}, {
+			"origin": "http://prometheus.com",
+			"key": "2Fx64jQ54asz8MD92MOVBOWS"
+		}, {
+			"origin": "android",
+			"key": "DaSVvkWbt30R5vJPhjlNyAQg"
+		}]
+	},
+	"databases": {
+		"local": "mongodb://localhost/test",
+		"production": "mongodb://test:test1234@ds055915.mongolab.com:55915/test-be"
+	},
+	"users": {
+		"types": ["admin", "manager", "member"]
+	}
+}
