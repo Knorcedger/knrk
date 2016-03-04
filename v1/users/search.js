@@ -7,7 +7,7 @@ var validationsRunner = require('apier-validationsrunner');
 module.exports = function(app) {
 	app.endpoint({
 		methods: ['get', 'post'],
-		url: '/users/search',
+		url: '/v1/users/search',
 		permissions: ['null'],
 		middlewares: [validate],
 		callback: function(req, res) {

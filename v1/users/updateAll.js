@@ -6,7 +6,7 @@ var reqlog = require('reqlog');
 module.exports = function(app) {
 	app.endpoint({
 		methods: ['get', 'post'],
-		url: '/users/update',
+		url: '/v1/users/update',
 		permissions: ['admin'],
 		callback: function(req, res) {
 			main(req, res, this);

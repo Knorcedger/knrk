@@ -21,7 +21,7 @@ module.exports = function(userType) {
 		User.create({
 			username: user.username,
 			password: crypto
-				.createHash('sha256')
+				.createHash('sha512')
 				.update(user.password)
 				.digest('hex'),
 			email: user.email,

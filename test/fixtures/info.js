@@ -1,5 +1,5 @@
 var requestModule = require('supertest-as-promised');
 
-exports.request = requestModule('http://localhost:2000');
+exports.request = requestModule('http://localhost:2000/v1');
 
-exports.secret = '2Fx64jQ54asz8MD92MOVBOWS';
+exports.secret = 'lD8}QF75XrWZTfu';

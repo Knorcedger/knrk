@@ -20,7 +20,8 @@ test('register', async t => {
 			secret: info.secret,
 			username: 'member',
 			password: '1234',
-			email: 'member@example.com'
+			email: 'member@example.com',
+			passphrase: 'fire'
 		});
 
 	helpers.checkSuccess(t, res);

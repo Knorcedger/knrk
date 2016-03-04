@@ -10,7 +10,7 @@ var validationsRunner = require('apier-validationsrunner');
 module.exports = function(app) {
 	app.endpoint({
 		methods: ['get', 'post'],
-		url: '/authentications/login',
+		url: '/v1/authentications/login',
 		permissions: ['null'],
 		middlewares: [validate],
 		callback: function(req, res) {
@@ -70,7 +70,7 @@ function main(req, res, self) {
 	user.findOne(req, res, {
 		username: req.requestData.username,
 		password: crypto
-			.createHash('sha256')
+			.createHash('sha512')
 			.update(req.requestData.password)
 			.digest('hex')
 	})

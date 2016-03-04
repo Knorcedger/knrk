@@ -1,13 +1,14 @@
-require('../../schemas/userSchema');
+require('../../schemas/passwordSchema');
 var db = require('apier-database');
-var User = db.mongoose.model('User');
+var Password = db.mongoose.model('Password');
 var reqlog = require('reqlog');
 var validationsRunner = require('apier-validationsrunner');
+var openpgp = require('openpgp');
 
 module.exports = function(app) {
 	app.endpoint({
 		methods: ['get', 'post'],
-		url: '/v1/users/:id/update',
+		url: '/v1/passwords/add',
 		permissions: ['member'],
 		middlewares: [validate],
 		callback: function(req, res) {
@@ -25,23 +26,11 @@ module.exports = function(app) {
  */
 function validate(req, res, next) {
 	var validations = {
-		id: {
-			INVALID_LENGTH: Boolean(req.params.id.length === 24),
-			NOT_EXIST: function(req, resolve) {
-				var user = new User();
-
-				user.findById(req, res, req.params.id)
-					.then(function(result) {
-						if (result) {
-							resolve(true);
-						} else {
-							resolve(false);
-						}
-					});
-			}
+		site: {
+			EMPTY: req.requestData.site
 		},
-		updateParams: {
-			INVALID: req.requestData.email || req.requestData.username
+		data: {
+			EMPTY: req.requestData.data
 		}
 	};
 
@@ -56,18 +45,31 @@ function validate(req, res, next) {
  * @param  {object} self Use self.send to send back data
  */
 function main(req, res, self) {
-	reqlog.info('user.update');
-	var user = new User();
+	reqlog.info('passwords.search');
 
-	var update = {};
-	if (req.requestData.email) {
-		update.email = req.requestData.email;
-	}
-	if (req.requestData.username) {
-		update.username = req.requestData.username;
-	}
-	user.findByIdAndUpdate(req, res, req.params.id, update, {new: true})
-		.then(function(result) {
-			self.send(result);
+	var password = new Password();
+
+	encrypt(req.requestData.data, req.activeUser.publicKey,
+		req.requestData.privateKey)
+		.then(function(ciphertext) {
+			password.create(req, res, {
+				site: req.requestData.site,
+				value: ciphertext,
+				value2: ciphertext.message.packets.write(),
+				userId: req.activeUser._id
+			}).then(function(result) {
+				self.send(result);
+			});
 		});
+}
+
+function encrypt(data, publicKey, privateKey) {
+	var options = {
+		data: data,
+		publicKeys: openpgp.key.readArmored(publicKey).keys,
+		privateKeys: openpgp.key.readArmored(privateKey).keys,
+		armor: false
+	};
+
+	return openpgp.encrypt(options);
 }
